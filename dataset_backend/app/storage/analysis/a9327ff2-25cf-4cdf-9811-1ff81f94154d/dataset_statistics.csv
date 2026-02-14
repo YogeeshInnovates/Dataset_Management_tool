@@ -1,0 +1,2 @@
+total_images,total_labels,total_classes,total_objects,avg_objects_per_image,missing_label_count,corrupted_image_count,class_distribution
+642,643,1,667,1.0389408099688473,0,0,{'0': 667}
