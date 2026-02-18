@@ -54,3 +54,15 @@ class UploadResponse(BaseModel):
 
 class DownloadURLResponse(BaseModel):
     download_url: str
+
+class AugmentationRequest(BaseModel):
+    dataset_id: str
+    export_format: str = "yolo" 
+    count: int = 1  # Number of augmented versions per image
+    horizontal_flip: bool = False
+    vertical_flip: bool = False
+    rotation: int = 0
+    brightness: float = 0.0
+    contrast: float = 0.0
+    blur: int = 0
+    noise: float = 0.0

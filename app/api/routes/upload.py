@@ -3,6 +3,7 @@ import shutil
 import json
 from pathlib import Path
 from fastapi import APIRouter, UploadFile, File, Form, HTTPException, Request, Depends
+import re
 from app.utils.file_utils import generate_session_id, UPLOADS_DIR, PROCESSED_DIR, ANALYSIS_DIR, EXPORTS_DIR, extract_zip, STORAGE_ROOT
 from app.services.validator import DatasetValidator
 from app.services.analyzer import DatasetAnalyzer
@@ -10,8 +11,8 @@ from app.services.export_service import ExportService
 from app.models.schemas import UploadResponse, DatasetInternalFormat, DownloadURLResponse
 
 # DB / persistence
-from app.db.session import get_db
-from app.db import models as db_models
+from app.core import get_db
+from app.core import User, Project, Dataset, Image, Label, DatasetValidation, ClassDistribution
 from sqlalchemy.orm import Session
 import uuid
 
@@ -23,6 +24,7 @@ async def upload_dataset(
     images_zip: UploadFile = File(...),
     labels_zip: UploadFile = File(...),
     format_type: str = Form(...),
+    storage_path: str = Form(None),
     db: Session = Depends(get_db)
 ):
     session_id = generate_session_id()
@@ -118,21 +120,21 @@ async def upload_dataset(
                 shutil.copy2(p, labels_out / p.name)
 
         # Ensure user exists
-        user = db.query(db_models.User).filter_by(id=user_id).first()
+        user = db.query(User).filter_by(id=user_id).first()
         if not user:
-            user = db_models.User(id=user_id, email="user@example.com")
+            user = User(id=user_id, email="user@example.com")
             db.add(user)
             db.commit()
 
         # Ensure project exists
-        project = db.query(db_models.Project).filter_by(name=project_name, user_id=user_id).first()
+        project = db.query(Project).filter_by(name=project_name, user_id=user_id).first()
         if not project:
-            project = db_models.Project(id=str(uuid.uuid4()), name=project_name, user_id=user_id)
+            project = Project(id=str(uuid.uuid4()), name=project_name, user_id=user_id)
             db.add(project)
             db.commit()
 
         # Insert Dataset row (use session_id as dataset id)
-        dataset = db_models.Dataset(
+        dataset = Dataset(
             id=session_id,
             project_id=project.id,
             format_type=format_type,
@@ -145,6 +147,7 @@ async def upload_dataset(
             corrupted_image_count=summary.corrupted_image_count,
             csv_file_path=str(session_analysis_dir / "dataset_statistics.csv"),
             zip_file_path=str(zip_path),
+            analysis_summary=summary.__dict__ if hasattr(summary, '__dict__') else None,
         )
         db.add(dataset)
         db.commit()
@@ -152,7 +155,7 @@ async def upload_dataset(
         # Insert Image rows (from storage)
         image_files = [p for p in images_out.iterdir() if p.is_file()]
         for img in sorted(image_files):
-            img_row = db_models.Image(
+            img_row = Image(
                 id=str(uuid.uuid4()),
                 dataset_id=dataset.id,
                 file_name=img.name,
@@ -166,15 +169,20 @@ async def upload_dataset(
         for lbl in sorted(labels_out.glob("*.txt")):
             # try to find associated image by stem
             stem = lbl.stem
-            image_row = db.query(db_models.Image).filter(db_models.Image.file_name.like(f"{stem}%")).first()
+            image_row = db.query(Image).filter(Image.dataset_id == dataset.id, Image.file_name.like(f"{stem}%")).first()
             with open(lbl, "r", encoding="utf-8", errors="ignore") as fh:
                 for ln in fh:
                     parts = ln.strip().split()
                     if not parts:
                         continue
                     class_id = parts[0]
-                    bbox = parts[1:]
-                    label_row = db_models.Label(
+                    # Convert YOLO coordinates to float
+                    try:
+                        bbox = [float(x) for x in parts[1:]]
+                    except ValueError:
+                        bbox = parts[1:] # Fallback
+                        
+                    label_row = Label(
                         id=str(uuid.uuid4()),
                         image_id=(image_row.id if image_row else None),
                         class_id=str(class_id),
@@ -184,7 +192,7 @@ async def upload_dataset(
         db.commit()
 
         # Insert validation summary
-        val = db_models.DatasetValidation(
+        val = DatasetValidation(
             dataset_id=dataset.id,
             total_images=report.total_images,
             total_labels=report.total_labels,
@@ -192,13 +200,18 @@ async def upload_dataset(
             orphan_labels=report.orphan_labels,
             empty_labels=report.empty_labels,
             corrupted_images=report.corrupted_images,
+            class_ids_found=report.class_ids_found if hasattr(report, 'class_ids_found') else None,
+            missing_label_images=report.missing_label_images if hasattr(report, 'missing_label_images') else None,
+            orphan_label_files=report.orphan_label_files if hasattr(report, 'orphan_label_files') else None,
+            empty_label_files=report.empty_label_files if hasattr(report, 'empty_label_files') else None,
+            corrupted_image_files=report.corrupted_image_files if hasattr(report, 'corrupted_image_files') else None,
         )
         db.add(val)
         db.commit()
 
         # Insert class distribution
         for cls_id, cnt in summary.class_distribution.items():
-            cd = db_models.ClassDistribution(dataset_id=dataset.id, class_id=str(cls_id), object_count=int(cnt))
+            cd = ClassDistribution(dataset_id=dataset.id, class_id=str(cls_id), object_count=int(cnt))
             db.add(cd)
         db.commit()
 

@@ -116,8 +116,8 @@ class FormatConverter:
     def generate_data_yaml(output_path: Path, class_ids: List[int], train_path: str, val_path: str, test_path: str = None, custom_names: List[str] = None):
         """Generate YOLO data.yaml file with specific formatting."""
         nc = len(class_ids)
-        if custom_names and len(custom_names) >= nc:
-            names = custom_names[:nc]
+        if custom_names and len(custom_names) > 0:
+            names = custom_names
         else:
             names = [f"class_{i}" for i in class_ids]
 

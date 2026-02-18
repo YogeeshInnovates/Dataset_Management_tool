@@ -1,8 +1,0 @@
-names:
-- class_0
-- class_1
-- class_2
-nc: 3
-test: test/images
-train: train/images
-val: valid/images

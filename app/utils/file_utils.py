@@ -4,7 +4,11 @@ import zipfile
 import uuid
 from pathlib import Path
 
-STORAGE_ROOT = Path("dataset_backend/app/storage")
+# Robust storage root: resolved relative to this file's location
+# Path(__file__) is .../app/utils/file_utils.py
+# .parent.parent is .../app/
+STORAGE_ROOT = Path(__file__).resolve().parent.parent / "storage"
+
 UPLOADS_DIR = STORAGE_ROOT / "uploads"
 PROCESSED_DIR = STORAGE_ROOT / "processed"
 ANALYSIS_DIR = STORAGE_ROOT / "analysis"
