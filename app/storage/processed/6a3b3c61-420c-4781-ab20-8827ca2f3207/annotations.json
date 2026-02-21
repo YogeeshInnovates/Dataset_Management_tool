@@ -1,0 +1,226 @@
+[
+    {
+        "image_name": "_a_fw_09_12am_11",
+        "width": 1080,
+        "height": 720,
+        "objects": [
+            {
+                "class_id": 0,
+                "xmin": 239.99975999999998,
+                "ymin": 188.00028000000003,
+                "xmax": 665.9992799999999,
+                "ymax": 441.00036
+            }
+        ]
+    },
+    {
+        "image_name": "_a_fw_09_12am_1",
+        "width": 5184,
+        "height": 3456,
+        "objects": [
+            {
+                "class_id": 0,
+                "xmin": 2332.0016640000003,
+                "ymin": 1584.000576,
+                "xmax": 4027.9991040000004,
+                "ymax": 2564.001216
+            }
+        ]
+    },
+    {
+        "image_name": "_a_fw_09_12am_6",
+        "width": 1080,
+        "height": 720,
+        "objects": [
+            {
+                "class_id": 0,
+                "xmin": 467.00064,
+                "ymin": 304.0002,
+                "xmax": 651.00024,
+                "ymax": 521.0002800000001
+            }
+        ]
+    },
+    {
+        "image_name": "_a_fw_09_12am_14",
+        "width": 1080,
+        "height": 608,
+        "objects": [
+            {
+                "class_id": 0,
+                "xmin": 607.0005,
+                "ymin": 382.999872,
+                "xmax": 967.0001400000001,
+                "ymax": 464.000064
+            }
+        ]
+    },
+    {
+        "image_name": "_a_fw_09_12am_16",
+        "width": 1080,
+        "height": 720,
+        "objects": [
+            {
+                "class_id": 0,
+                "xmin": 146.99988,
+                "ymin": 152.99999999999997,
+                "xmax": 494.99964,
+                "ymax": 261.0
+            }
+        ]
+    },
+    {
+        "image_name": "_a_fw_09_12am_8",
+        "width": 1080,
+        "height": 810,
+        "objects": [
+            {
+                "class_id": 0,
+                "xmin": 202.99949999999998,
+                "ymin": 246.00024,
+                "xmax": 731.9997,
+                "ymax": 574.00002
+            }
+        ]
+    },
+    {
+        "image_name": "_a_fw_09_12am_5",
+        "width": 1080,
+        "height": 718,
+        "objects": [
+            {
+                "class_id": 0,
+                "xmin": 426.00006,
+                "ymin": 142.99975199999997,
+                "xmax": 705.99978,
+                "ymax": 393.999628
+            }
+        ]
+    },
+    {
+        "image_name": "_a_fw_09_12am_1 - copy",
+        "width": 5184,
+        "height": 3456,
+        "objects": [
+            {
+                "class_id": 0,
+                "xmin": 2332.0016640000003,
+                "ymin": 1584.000576,
+                "xmax": 4027.9991040000004,
+                "ymax": 2564.001216
+            }
+        ]
+    },
+    {
+        "image_name": "_a_fw_09_12am_2 - copy",
+        "width": 1080,
+        "height": 719,
+        "objects": [
+            {
+                "class_id": 0,
+                "xmin": 60.99947999999998,
+                "ymin": 176.99982500000002,
+                "xmax": 470.99988,
+                "ymax": 361.999963
+            }
+        ]
+    },
+    {
+        "image_name": "_a_fw_09_12am_7",
+        "width": 1080,
+        "height": 720,
+        "objects": [
+            {
+                "class_id": 0,
+                "xmin": 348.99984,
+                "ymin": 355.00032000000004,
+                "xmax": 543.0002400000001,
+                "ymax": 454.00032
+            }
+        ]
+    },
+    {
+        "image_name": "_a_fw_09_12am_9",
+        "width": 1080,
+        "height": 720,
+        "objects": [
+            {
+                "class_id": 0,
+                "xmin": 152.99982000000003,
+                "ymin": 136.00008000000003,
+                "xmax": 1000.99962,
+                "ymax": 554.0003999999999
+            }
+        ]
+    },
+    {
+        "image_name": "_a_fw_09_12am_10",
+        "width": 1080,
+        "height": 720,
+        "objects": [
+            {
+                "class_id": 0,
+                "xmin": 290.99952,
+                "ymin": 109.00008,
+                "xmax": 537.9998400000001,
+                "ymax": 417.00023999999996
+            }
+        ]
+    },
+    {
+        "image_name": "_a_fw_09_12am_12",
+        "width": 1080,
+        "height": 720,
+        "objects": [
+            {
+                "class_id": 0,
+                "xmin": 302.9994,
+                "ymin": 157.00032000000002,
+                "xmax": 388.9998,
+                "ymax": 281.00016
+            }
+        ]
+    },
+    {
+        "image_name": "_a_fw_09_12am_15",
+        "width": 1080,
+        "height": 608,
+        "objects": [
+            {
+                "class_id": 0,
+                "xmin": 246.99978,
+                "ymin": 62.99974399999999,
+                "xmax": 473.99958000000004,
+                "ymax": 192.99987199999998
+            }
+        ]
+    },
+    {
+        "image_name": "_a_fw_09_12am_3",
+        "width": 1080,
+        "height": 720,
+        "objects": [
+            {
+                "class_id": 0,
+                "xmin": 359.0001,
+                "ymin": 129.99996,
+                "xmax": 558.9999,
+                "ymax": 252.99972
+            }
+        ]
+    },
+    {
+        "image_name": "_a_fw_09_12am_4",
+        "width": 1080,
+        "height": 720,
+        "objects": [
+            {
+                "class_id": 0,
+                "xmin": 229.99949999999995,
+                "ymin": 187.0002,
+                "xmax": 520.0000200000001,
+                "ymax": 552.99996
+            }
+        ]
+    }
+]
